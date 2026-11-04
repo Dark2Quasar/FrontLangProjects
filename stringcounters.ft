@@ -1,7 +1,6 @@
 include "std:string"
 let sentence = enter("Enter Sentence: ")
 let vowels: String = "aeiouAEIOU"
-let consonants: String = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ"
 fn count_vowel() -> Int:
     let count: Int = 0
     for ch in sentence:
@@ -11,7 +10,7 @@ fn count_vowel() -> Int:
 fn count_conso() -> Int:
     let count: Int = 0
     for ch in sentence:
-        if str_contains(consonants, ch):
+        if not str_contains(vowels, ch):
             count = count + 1
     return count
 show("Vowels: " + int_to_string(count_vowel()))

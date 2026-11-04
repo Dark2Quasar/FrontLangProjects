@@ -1,0 +1,9 @@
+fn select_prime():
+    for number in range(2, 1001):
+        let is_prime = true
+        for divisor in range(2, number):
+            if number % divisor == 0:
+                is_prime = false
+        if is_prime:
+            show(number)
+select_prime()
