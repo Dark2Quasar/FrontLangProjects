@@ -1,0 +1,115 @@
+include "std:string"
+
+let size = 16
+
+let min_run = 4
+
+let values = array_new(size, 0)
+
+values[0] = 5
+
+values[1] = -1
+
+values[2] = 3
+
+values[3] = 3
+
+values[4] = 9
+
+values[5] = 2
+
+values[6] = 8
+
+values[7] = 0
+
+values[8] = 7
+
+values[9] = 4
+
+values[10] = 6
+
+values[11] = 1
+
+values[12] = 14
+
+values[13] = 10
+
+values[14] = -3
+
+values[15] = 13
+
+fn insertion_sort(start: Int, end: Int):
+    let i = start + 1
+    while i < end:
+        let value = values[i]
+        let j = i
+        while j > start and values[j - 1] > value:
+            values[j] = values[j - 1]
+            j = j - 1
+        values[j] = value
+        i = i + 1
+
+fn merge(start: Int, middle: Int, end: Int):
+    let buffer = array_new(end - start, 0)
+    let i = start
+    while i < end:
+        buffer[i - start] = values[i]
+        i = i + 1
+    let left = 0
+    let right = middle - start
+    let left_end = middle - start
+    let right_end = end - start
+    let output = start
+    while left < left_end and right < right_end:
+        if buffer[left] <= buffer[right]:
+            values[output] = buffer[left]
+            left = left + 1
+        else:
+            values[output] = buffer[right]
+            right = right + 1
+        output = output + 1
+    while left < left_end:
+        values[output] = buffer[left]
+        left = left + 1
+        output = output + 1
+    while right < right_end:
+        values[output] = buffer[right]
+        right = right + 1
+        output = output + 1
+
+fn tim_sort():
+    let start = 0
+    while start < size:
+        let end = start + min_run
+        if end > size:
+            end = size
+        insertion_sort(start, end)
+        start = end
+    let width = min_run
+    while width < size:
+        let left = 0
+        while left < size:
+            let middle = left + width
+            if middle > size:
+                middle = size
+            let right = left + width * 2
+            if right > size:
+                right = size
+            if middle < right:
+                merge(left, middle, right)
+            left = left + width * 2
+        width = width * 2
+
+tim_sort()
+
+let output = ""
+
+let index = 0
+
+while index < size:
+    if index > 0:
+        output = output + ", "
+    output = output + int_to_string(values[index])
+    index = index + 1
+
+show("Sorted: " + output)
